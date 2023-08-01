@@ -49,7 +49,7 @@ class SinglyLinkedList {
    */
   isEmpty() {
     // return this.head === null;
-    if(this.head === null){
+    if (this.head === null) {
       console.log("This list is empty Son!!")
       return true;
     } else {
@@ -66,13 +66,13 @@ class SinglyLinkedList {
    * @returns {SinglyLinkedList} This list.
    */
   insertAtBack(value) {
-    if(this.isEmpty()){
+    if (this.isEmpty()) {
       this.head = new ListNode(value)
       return this;
     }
     let runner = this.head;
 
-    while(runner.next != null){
+    while (runner.next != null) {
       runner = runner.next;
     }
 
@@ -91,7 +91,9 @@ class SinglyLinkedList {
    *    or null when the end of the list has been reached.
    * @returns {SinglyLinkedList} This list.
    */
-  insertAtBackRecursive(data, runner = this.head) { }
+  insertAtBackRecursive(data, runner = this.head) {
+    
+  }
 
   /**
    * Calls insertAtBack on each item of the given array.
@@ -106,6 +108,33 @@ class SinglyLinkedList {
     }
     return this;
   }
+  /**
+   * Creates a new node with the given data and inserts that node at the front
+   * of this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @param {any} data The data for the new node.
+   * @returns {SinglyLinkedList} This list.
+   */
+  insertAtFront(data) { }
+
+  /**
+   * Removes the first node of this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @returns {any} The data from the removed node.
+   */
+  removeHead() { }
+
+  // EXTRA
+  /**
+   * Calculates the average of this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @returns {number|NaN} The average of the node's data.
+   */
+  average() { }
+
 
   /**
    * Converts this list into an array containing the data of each node.
@@ -124,30 +153,24 @@ class SinglyLinkedList {
     return arr;
   }
 
-  printList() {
-    if (this.isEmpty()) {
-      console.log("This list is empty");
-      return this;
-    }
-    // We need to initialize an empty string
-    let toPrint = "";
-    // And start a runner at the head of the list.
+  /**
+   * Creates a comma separated string of the node's data.
+   * - Time: O(n) linear, n = list length.
+   * - Space: O(n) linear, vals str grows as list grows.
+   * @returns {string} The comma separate data of all the nodes.
+   */
+  print() {
     let runner = this.head;
-    // We want to perform something every time runner isn't null
-    while (runner != null) {
-      // Add the new value and an arrow (oh so fancy, I know!)
-      // to the string we want to print
-      toPrint += `${runner.value} -> `;
-      // And move runner to the next node. This is gonna be your 
-      // bread and butter when it comes to linked lists
+    let vals = "";
+
+    while (runner) {
+      vals += `${runner.data}${runner.next ? ", " : ""}`;
       runner = runner.next;
     }
-    // What good is our print list method if it doesn't console log?!
-    console.log(toPrint);
-    // And just so we can chain methods (idk why you'd want to chain from print list,
-    // but why not), just return this.
-    return this;
+    console.log(vals);
+    return vals;
   }
+
 }
 
 /******************************************************************* 
@@ -155,7 +178,6 @@ Multiple test lists already constructed to test your methods on.
 Below commented code depends on insertAtBack method to be completed,
 after completing it, uncomment the code.
 */
-const emptyList = new SinglyLinkedList();
 
 // const singleNodeList = new SinglyLinkedList().insertAtBackMany([1]);
 // const biNodeList = new SinglyLinkedList().insertAtBackMany([1, 2]);
@@ -177,17 +199,12 @@ const emptyList = new SinglyLinkedList();
 //   1, 1, 1, 2, 3, 3, 4, 5, 5,
 // ]);
 
-// Print your list like so:
-// console.log(firstThreeList.toArr());
-
-//   Multiple test lists already constructed to test your methods on.
-// Below commented code depends on insertAtBack method to be completed,
-// after completing it, uncomment the code.
-
+const emptyList = new SinglyLinkedList();
 let myList = new SinglyLinkedList();
 
 myList.insertAtBack(1).insertAtBack(2).insertAtBack(3).insertAtBack(4).insertAtBack(5).insertAtBack(-8).insertAtBack(-6);
+myList.insertAtBackRecursive(1).insertAtBackRecursive(2).insertAtBackRecursive(3).insertAtBackRecursive(4).insertAtBackRecursive(5).insertAtBackRecursive(-8).insertAtBackRecursive(-6);
 console.log(myList)
 console.log(myList.toArr())
 
-// myList.printList()
+myList.print()
