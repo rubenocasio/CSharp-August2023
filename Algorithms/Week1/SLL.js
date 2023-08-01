@@ -92,7 +92,22 @@ class SinglyLinkedList {
    * @returns {SinglyLinkedList} This list.
    */
   insertAtBackRecursive(data, runner = this.head) {
-    
+    // Check if the list is empty (head is null)
+    if (this.isEmpty()) {
+      // If the list is empty, create a new node with the data and set it as the head of the list
+      this.head = new SLNode(data);
+      return this; // Return the updated list
+    }
+
+    // Check if the next node of the current runner is null, i.e., we are at the last node of the list
+    if (runner.next === null) {
+      // If we are at the last node, create a new node with the data and set it as the next node of the current runner
+      runner.next = new SLNode(data);
+      return this; // Return the updated list
+    }
+
+    // If we haven't reached the last node yet, recursively call the function with the next node as the new runner
+    return this.insertAtBackRecursive(data, runner.next);
   }
 
   /**
@@ -116,7 +131,20 @@ class SinglyLinkedList {
    * @param {any} data The data for the new node.
    * @returns {SinglyLinkedList} This list.
    */
-  insertAtFront(data) { }
+  insertAtFront(value) {
+    // Step 1: Let's create our new node
+    let newNode = new ListNode(value);
+
+    // Step 2: Assign that new node's .next pointer to be the current head of the list
+    newNode.next = this.head;
+
+    // Step 3: And reassign the head of the list to now be the new node.
+    this.head = newNode;
+
+    // Step 4: Return the list.
+    return this;
+  }
+
 
   /**
    * Removes the first node of this list.
@@ -124,7 +152,24 @@ class SinglyLinkedList {
    * - Space: (?).
    * @returns {any} The data from the removed node.
    */
-  removeHead() { }
+  removeHead() {
+    // If the list is empty, we can't possibly remove anything
+    if (this.isEmpty()) {
+      // So let's let it be known and just return the list.
+      console.log("List is already empty.");
+      return null;
+    }
+    // Let's hold onto the current head so we can eventually return it
+    let removed = this.head;
+    // Set the head to the current head's next node
+    this.head = removed.next;
+    // Chop off the removed node's .next so we can treat it
+    // as a stand-alone node
+    removed.next = null;
+
+    // and return it.
+    return removed;
+  }
 
   // EXTRA
   /**
@@ -133,7 +178,30 @@ class SinglyLinkedList {
    * - Space: (?).
    * @returns {number|NaN} The average of the node's data.
    */
-  average() { }
+  average() {
+    // Check if the list is empty. If so, return null.
+    if (this.isEmpty()) {
+      return null;
+    }
+
+    // Initialize variables to keep track of the sum of data and the count of nodes in the list.
+    let runner = this.head;
+    let sum = 0;
+    let cnt = 0;
+
+    // Iterate through each node in the list.
+    while (runner) {
+      // Increment the count of nodes.
+      cnt++;
+      // Add the data of the current node to the sum.
+      sum += runner.data;
+      // Move the runner to the next node.
+      runner = runner.next;
+    }
+
+    // Calculate and return the average by dividing the sum by the count of nodes.
+    return sum / cnt;
+  }
 
 
   /**
@@ -202,9 +270,12 @@ after completing it, uncomment the code.
 const emptyList = new SinglyLinkedList();
 let myList = new SinglyLinkedList();
 
-myList.insertAtBack(1).insertAtBack(2).insertAtBack(3).insertAtBack(4).insertAtBack(5).insertAtBack(-8).insertAtBack(-6);
-myList.insertAtBackRecursive(1).insertAtBackRecursive(2).insertAtBackRecursive(3).insertAtBackRecursive(4).insertAtBackRecursive(5).insertAtBackRecursive(-8).insertAtBackRecursive(-6);
-console.log(myList)
-console.log(myList.toArr())
-
+// myList.insertAtBack(1).insertAtBack(2).insertAtBack(3).insertAtBack(4).insertAtBack(5).insertAtBack(-8).insertAtBack(-6);
+myList.insertAtFront(1).insertAtFront(2).insertAtFront(3).insertAtFront(4).insertAtFront(5).insertAtFront(-8).insertAtFront(-6);
+// myList.insertAtBackRecursive(1).insertAtBackRecursive(2).insertAtBackRecursive(3).insertAtBackRecursive(4).insertAtBackRecursive(5).insertAtBackRecursive(-8).insertAtBackRecursive(-6);
+// console.log(myList)
+// console.log(myList.toArr())
+myList.print()
+myList.removeHead()
+console.log(myList.average())
 myList.print()
