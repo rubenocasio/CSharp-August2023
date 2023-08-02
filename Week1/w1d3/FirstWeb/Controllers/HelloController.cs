@@ -20,6 +20,28 @@ public class HelloController : Controller   // Remember inheritance?
     [HttpGet("")] 
     public ViewResult Index()        
     {            
+        ViewBag.ReaperUlt = "Overwatch";
+        ViewBag.Number = 2;
     	return View();      
-    }    
+    }
+
+    [HttpGet("/user/more")]
+    public ViewResult OneUser()
+    {
+        ViewBag.ReaperUlt = "Overwatch";
+        ViewBag.StarWars = "Darth Vader";
+        return View();
+    }
+
+    [HttpPost("process")]
+    public IActionResult Process(string favoriteAnimal)
+    {
+        if(favoriteAnimal.ToLower() == "dog")
+        {
+            ViewBag.Error = "Dogs are a great pick but choose something else!";
+            return View("Index");
+        }
+        return RedirectToAction("Index");
+    }
+
 }
