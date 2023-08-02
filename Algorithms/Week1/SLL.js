@@ -249,6 +249,7 @@ class SinglyLinkedList {
   recursiveMax(runner = this.head, maxNode = this.head) {
     //Logic here
   }
+  
   /**
    * Converts this list into an array containing the data of each node.
    * - Time: O(n) linear.
