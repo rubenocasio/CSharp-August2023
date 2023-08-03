@@ -207,8 +207,42 @@ class SinglyLinkedList {
    * - Space: O(?).
    * @returns {any} The data from the node that was removed.
    */
-  removeBack() { 
-    //Logic here
+  removeBack() {
+    // First step: Is the list empty?
+    if (this.isEmpty()) {
+      console.log("List is empty.");
+      return null;
+    }
+    // Second step: Is the list only one element long? 
+    // If so, just set the head to null
+    else if (this.head.next == null) {
+      let temp = this.head;
+      this.head = null;
+      return temp;
+    }
+    //If either of those conditions weren't met, let's get down to business
+    else {
+      // We'll need 2 iterators. Let's call them runner and walker
+      // walker will start at the head, and runner at the 2nd node
+      let walker = this.head;
+      let runner = this.head.next;
+
+      // And let's iterate so that runner reachest the last node,
+      // with walker remaining 1 node behind
+      while (runner.next != null) {
+        // move walker to the runner
+        walker = runner;
+        // and move runner to the next node
+        runner = runner.next;
+      }
+      // If we've broken out of the loop, then runner is the last node,
+      // and walker is the second to last node.
+
+      // Set walker.next to null, which essentially lops runner off 
+      walker.next = null;
+      // and return the runner (previously the final node)
+      return runner;
+    }
   }
 
   /**
@@ -219,7 +253,20 @@ class SinglyLinkedList {
    * @returns {boolean}
    */
   contains(val) {
-    //Logic here
+    // Start from the head of the linked list.
+    let runner = this.head;
+    // Loop through the linked list until we reach the end (runner becomes null).
+    while (runner) {
+      // Check if the current node's data is equal to the given value.
+      if (runner.data === val) {
+        // If we find the value in the linked list, return true.
+        return true;
+      }
+      // Move to the next node in the linked list.
+      runner = runner.next;
+    }
+    // If the loop completes without finding the value, it is not in the list, so return false.
+    return false;
   }
 
   /** EXTRA
@@ -232,7 +279,19 @@ class SinglyLinkedList {
    * @returns {boolean}
    */
   containsRecursive(val, current = this.head) {
-    //Logic here
+    // Base case: If we reach the end of the list (current is null),
+    // we didn't find the value, so return false.
+    if (current === null) {
+      return false;
+    }
+    // Check if the current node's data is equal to the given value.
+    if (current.data === val) {
+      // If we find the value in the current node, return true.
+      return true;
+    }
+    // Recursive case: Call the function again with the next node in the linked list.
+    // This will continue the search through the list until the base case is reached.
+    return this.containsRecursive(val, current.next);
   }
 
   // EXTRA
@@ -247,9 +306,59 @@ class SinglyLinkedList {
    * @returns {?number} The max int or null if none.
    */
   recursiveMax(runner = this.head, maxNode = this.head) {
-    //Logic here
+    // Base case: If the list is empty (head is null), return null.
+    if (this.head === null) {
+      return null;
+    }
+    // Base case: If we have reached the end of the list (runner is null),
+    // return the data of the node containing the maximum value.
+    if (runner === null) {
+      return maxNode.data;
+    }
+    // Compare the data of the current node (runner) with the maximum node (maxNode).
+    // If the data of the current node is greater than the data of the maximum node,
+    // update maxNode to point to the current node.
+    if (runner.data > maxNode.data) {
+      maxNode = runner;
+    }
+    // Recursive case: Call the function again with the next node in the linked list
+    // and the updated maxNode.
+    // This will continue to traverse through the list, updating maxNode whenever a larger value is found.
+    return this.recursiveMax(runner.next, maxNode);
   }
-  
+
+  /**
+   * Retrieves the data of the second to last node in this list.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @returns {any} The data of the second to last node or null if there is no
+   *    second to last node.
+   */
+  secondToLast() { }
+
+  /**
+   * Removes the node that has the matching given val as it's data.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @param {any} val The value to compare to the node's data to find the
+   *    node to be removed.
+   * @returns {boolean} Indicates if a node was removed or not.
+   */
+  removeVal(val) { }
+
+  // EXTRA
+  /**
+   * Inserts a new node before a node that has the given value as its data.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @param {any} newVal The value to use for the new node that is being added.
+   * @param {any} targetVal The value to use to find the node that the newVal
+   *    should be inserted in front of.
+   * @returns {boolean} To indicate whether the node was pre-pended or not.
+   */
+  prepend(newVal, targetVal) { }
+
+
   /**
    * Converts this list into an array containing the data of each node.
    * - Time: O(n) linear.
@@ -325,3 +434,10 @@ myList.print()
 myList.removeHead()
 console.log(myList.average())
 myList.print()
+myList.removeBack()
+myList.print()
+console.log(myList.contains(4))
+console.log(myList.contains(20))
+console.log(myList.containsRecursive(4))
+console.log(myList.containsRecursive(20))
+console.log(myList.recursiveMax())
