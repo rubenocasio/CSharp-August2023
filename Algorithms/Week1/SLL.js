@@ -202,7 +202,7 @@ class SinglyLinkedList {
 
   /**
    * Removes the last node of this list.
-   * - HINT: Figuring out a way to find the SECOND TO LAST node will be immensely helpful!
+   * - HINT: igFuring out a way to find the SECOND TO LAST node will be immensely helpful!
    * - Time: O(?).
    * - Space: O(?).
    * @returns {any} The data from the node that was removed.
@@ -334,7 +334,17 @@ class SinglyLinkedList {
    * @returns {any} The data of the second to last node or null if there is no
    *    second to last node.
    */
-  secondToLast() { }
+  secondToLast() {
+    if (this.head == null || this.head.next == null) {
+      return null;
+    }
+    let runner = this.head;
+    while (runner.next.next != null) {
+      runner = runner.next;
+    }
+    return runner.data;
+
+  }
 
   /**
    * Removes the node that has the matching given val as it's data.
@@ -431,13 +441,13 @@ myList.insertAtFront(1).insertAtFront(2).insertAtFront(3).insertAtFront(4).inser
 // console.log(myList)
 // console.log(myList.toArr())
 myList.print()
-myList.removeHead()
-console.log(myList.average())
-myList.print()
-myList.removeBack()
-myList.print()
-console.log(myList.contains(4))
-console.log(myList.contains(20))
-console.log(myList.containsRecursive(4))
-console.log(myList.containsRecursive(20))
-console.log(myList.recursiveMax())
+// myList.removeHead()
+// console.log(myList.average())
+// myList.print()
+// myList.removeBack()
+// myList.print()
+// console.log(myList.contains(4))
+// console.log(myList.contains(20))
+// console.log(myList.containsRecursive(4))
+// console.log(myList.containsRecursive(20))
+// console.log(myList.recursiveMax())
