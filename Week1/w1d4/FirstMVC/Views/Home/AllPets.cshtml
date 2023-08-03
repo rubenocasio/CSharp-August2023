@@ -7,5 +7,8 @@
 
 @foreach(Pet p in Model)
 {
-    <h2>@p.Name</h2>
+    <h2>Name: @p.Name</h2>
+    <h3>Age: @p.Age</h3>
+    <h4>Type: @p.Species</h4>                           //Yes           //No
+    <h5>Is this animal is Friendly? @(p.IsFriendly ? "is friendly" : "is not friendly")</h5>
 }
