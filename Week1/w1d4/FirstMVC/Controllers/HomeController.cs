@@ -23,8 +23,13 @@ public class HomeController : Controller
     [HttpPost("pet/create")]
     public IActionResult Create(Pet newPet)
     {
-        Pets.Add(newPet);
-        return RedirectToAction("AllPets");
+        if(ModelState.IsValid)
+        {
+            Pets.Add(newPet);
+            return RedirectToAction("AllPets");
+        } else {
+            return View("Index");
+        }
     }
 
     [HttpGet("allpets")]
