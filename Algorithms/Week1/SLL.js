@@ -453,7 +453,34 @@ class SinglyLinkedList {
    *    whose nodes will be added to the back of this list.
    * @returns {SinglyLinkedList} This list with the added nodes.
    */
-  concat(addList) { }
+  concat(list) {
+    // If this list is empty, we can simply set its head to be the head of the given list.
+    // We also set the head of the given list to null to indicate that it has been concatenated.
+    if (this.isEmpty()) {
+      this.head = list.head;
+      list.head = null;
+      return this;
+    }
+
+    // If this list is not empty, we need to find the last node in this list.
+    // We start traversing the list using a runner (`runner`) that starts from the head of this list.
+    let runner = this.head;
+
+    // While the runner has a next node, we continue traversing the list until we reach the last node.
+    while (runner.next != null) {
+      runner = runner.next;
+    }
+
+    // Once we find the last node (`runner` points to the last node), we set the `next` pointer of the last node
+    // to be the head of the given list. This effectively concatenates the given list to the end of this list.
+    runner.next = list.head;
+
+    // We set the head of the given list to null to indicate that it has been concatenated.
+    list.head = null;
+
+    // Finally, we return this list after concatenation.
+    return this;
+  }
 
   /**
    * Finds the node with the smallest data and moves that node to the front of
@@ -462,7 +489,43 @@ class SinglyLinkedList {
    * - Space: O(?).
    * @returns {SinglyLinkedList} This list.
    */
-  moveMinToFront() { }
+  moveMinToFront() {
+    // If the list is empty, there's nothing to move, so we return this list as is.
+    if (this.isEmpty()) {
+      return this;
+    }
+
+    // Initialize variables to keep track of the minimum node and its previous node.
+    let min = this.head;
+    let minPrev = null;
+
+    // Start traversing the list from the second node, as we already have the first node as the current minimum.
+    let runner = this.head.next;
+
+    // Loop through the list to find the node with the minimum value.
+    while (runner.next != null) {
+      if (runner.next.value < min.value) {
+        min = runner.next;
+        minPrev = runner;
+      }
+      runner = runner.next;
+    }
+
+    // If the minimum node is not already at the front (i.e., not the head), move it to the front.
+    if (min !== this.head) {
+      // Remove the minimum node from its current position by updating the `next` pointer of its previous node.
+      minPrev.next = min.next;
+
+      // Move the minimum node to the front by updating its `next` pointer to point to the current head.
+      min.next = this.head;
+
+      // Update the head of the list to be the minimum node, effectively moving it to the front.
+      this.head = min;
+    }
+
+    // Return this list after moving the node with the minimum value to the front.
+    return this;
+  }
 
   // EXTRA
   /**
@@ -477,7 +540,7 @@ class SinglyLinkedList {
    *    no longer in this list.
    */
   splitOnVal(val) { }
-  
+
   /**
    * Converts this list into an array containing the data of each node.
    * - Time: O(n) linear.
@@ -543,10 +606,12 @@ after completing it, uncomment the code.
 
 const emptyList = new SinglyLinkedList();
 let myList = new SinglyLinkedList();
+let myList2 = new SinglyLinkedList();
 
 // myList.insertAtBack(1).insertAtBack(2).insertAtBack(3).insertAtBack(4).insertAtBack(5).insertAtBack(-8).insertAtBack(-6);
 myList.insertAtFront(1).insertAtFront(2).insertAtFront(3).insertAtFront(4).insertAtFront(5).insertAtFront(-8).insertAtFront(-6);
-// myList.insertAtBackRecursive(1).insertAtBackRecursive(2).insertAtBackRecursive(3).insertAtBackRecursive(4).insertAtBackRecursive(5).insertAtBackRecursive(-8).insertAtBackRecursive(-6);
+myList2.insertAtBackRecursive(1).insertAtBackRecursive(2).insertAtBackRecursive(3).insertAtBackRecursive(4).insertAtBackRecursive(5).insertAtBackRecursive(-8).insertAtBackRecursive(-6);
+
 // console.log(myList)
 // console.log(myList.toArr())
 myList.print()
@@ -564,3 +629,5 @@ console.log(myList.secondToLast())
 console.log(myList.removeVal(3))
 console.log(myList.prepend(500, 4))
 myList.print()
+
+myList.concat(myList2)
