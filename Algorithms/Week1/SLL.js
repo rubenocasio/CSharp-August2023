@@ -510,7 +510,6 @@ class SinglyLinkedList {
       }
       runner = runner.next;
     }
-
     // If the minimum node is not already at the front (i.e., not the head), move it to the front.
     if (min !== this.head) {
       // Remove the minimum node from its current position by updating the `next` pointer of its previous node.
@@ -522,7 +521,6 @@ class SinglyLinkedList {
       // Update the head of the list to be the minimum node, effectively moving it to the front.
       this.head = min;
     }
-
     // Return this list after moving the node with the minimum value to the front.
     return this;
   }
