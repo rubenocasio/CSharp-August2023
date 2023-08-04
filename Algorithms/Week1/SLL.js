@@ -335,15 +335,25 @@ class SinglyLinkedList {
    *    second to last node.
    */
   secondToLast() {
+    // If the list is empty or has only one node (head is null or head.next is null),
+    // there is no second-to-last node, so we return null.
     if (this.head == null || this.head.next == null) {
       return null;
     }
+
+    // We start from the head of the linked list and traverse it until we reach the second-to-last node.
+    // We use a runner to move through the list. The runner is initialized to the head.
     let runner = this.head;
+
+    // While the next node after the current runner node is not null (i.e., we have not reached the last node),
+    // we continue moving the runner to the next node.
+    // The loop stops when runner.next.next becomes null, which means runner is at the second-to-last node.
     while (runner.next.next != null) {
       runner = runner.next;
     }
-    return runner.data;
 
+    // Once we have reached the second-to-last node, we return its data.
+    return runner.data;
   }
 
   /**
@@ -354,7 +364,38 @@ class SinglyLinkedList {
    *    node to be removed.
    * @returns {boolean} Indicates if a node was removed or not.
    */
-  removeVal(val) { }
+  removeVal(val) {
+    // If the list is empty, there is nothing to remove, so we return false.
+    if (this.isEmpty()) {
+      return false;
+    }
+
+    // If the value to be removed is at the head of the list,
+    // we remove the head node and return true.
+    if (this.head.data === val) {
+      this.removeHead();
+      return true;
+    }
+
+    // We start traversing the list from the head using a runner.
+    let runner = this.head;
+
+    // While the runner has a next node, we check if the next node's data matches the specified value.
+    while (runner.next) {
+      // If the data of the next node matches the value, it means we have found the value to be removed.
+      // We skip the next node by making the current node's next pointer point to the next node's next.
+      // This effectively removes the node with the specified value from the list.
+      if (runner.next.data === val) {
+        runner.next = runner.next.next;
+        return true; // Value found and removed, so we return true.
+      }
+      // Move the runner to the next node to continue searching for the value.
+      runner = runner.next;
+    }
+
+    // If we reach this point, it means the value was not found in the list, so we return false.
+    return false;
+  }
 
   // EXTRA
   /**
@@ -366,9 +407,77 @@ class SinglyLinkedList {
    *    should be inserted in front of.
    * @returns {boolean} To indicate whether the node was pre-pended or not.
    */
-  prepend(newVal, targetVal) { }
+  prepend(newVal, targetVal) {
+    // If the list is empty, there is nothing to prepend to, so we return null.
+    if (this.isEmpty()) {
+      return null;
+    }
 
+    // If the target value is at the head of the list,
+    // we insert the new value at the front and return the new head.
+    if (this.head.data === targetVal) {
+      this.insertAtFront(newVal);
+      return this.head;
+    }
 
+    // We already know we're not going to need to prepend before the head,
+    // so we start traversing the list using a runner (`runner`) that starts from the head of the list.
+    let runner = this.head;
+
+    // While the runner has a next node, we check if the data of the next node matches the target value.
+    while (runner) {
+      // If we reach the end of the list (runner.next is null) and the target value is not found,
+      // we return null to indicate that the target value was not found in the list.
+      if (runner.next === null) {
+        return null;
+      }
+
+      // If the data of the next node matches the target value, it means we have found the insertion point.
+      // We create a new node with the new value and insert it immediately before the node with the target value.
+      // To do this, we set the `next` pointer of the new node to the next node of the runner,
+      // and we set the `next` pointer of the runner to the new node.
+      const prependNode = new ListNode(newVal);
+      prependNode.next = runner.next;
+      runner.next = prependNode;
+
+      // We have successfully inserted the new node, so we return the newly inserted node.
+      return prependNode;
+    }
+  }
+
+  /**
+   * Concatenates the nodes of a given list onto the back of this list.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @param {SinglyLinkedList} addList An instance of a different list whose
+   *    whose nodes will be added to the back of this list.
+   * @returns {SinglyLinkedList} This list with the added nodes.
+   */
+  concat(addList) { }
+
+  /**
+   * Finds the node with the smallest data and moves that node to the front of
+   * this list.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @returns {SinglyLinkedList} This list.
+   */
+  moveMinToFront() { }
+
+  // EXTRA
+  /**
+   * Splits this list into two lists where the 2nd list starts with the node
+   * that has the given value.
+   * splitOnVal(5) for the list (1=>3=>5=>2=>4) will change list to (1=>3)
+   * and the return value will be a new list containing (5=>2=>4)
+   * - Time: O(?).
+   * - Space: O(?).
+   * @param {any} val The value in the node that the list should be split on.
+   * @returns {SinglyLinkedList} The split list containing the nodes that are
+   *    no longer in this list.
+   */
+  splitOnVal(val) { }
+  
   /**
    * Converts this list into an array containing the data of each node.
    * - Time: O(n) linear.
@@ -451,3 +560,7 @@ myList.print()
 // console.log(myList.containsRecursive(4))
 // console.log(myList.containsRecursive(20))
 // console.log(myList.recursiveMax())
+console.log(myList.secondToLast())
+console.log(myList.removeVal(3))
+console.log(myList.prepend(500, 4))
+myList.print()
