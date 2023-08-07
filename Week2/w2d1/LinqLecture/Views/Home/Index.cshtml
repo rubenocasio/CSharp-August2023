@@ -1,8 +1,85 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Our Game Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Platform</th>
+        </tr>
+        @foreach(Game g in ViewBag.allGames)
+        {
+            <tr>
+                <td>@g.Title</td>
+                <td>@(g.Price == 0?"Free":"$"+g.Price)</td>
+                <td>@g.Genre</td>
+                <td>@g.Rating</td>
+                <td>@g.Platform</td>
+            </tr>
+        }
+    </table>
+    <h1 class="display-4">Welcome to All Platforms or T Rated Games</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Platform</th>
+        </tr>
+        @foreach(Game g in ViewBag.all)
+        {
+            <tr>
+                <td>@g.Title</td>
+                <td>@(g.Price == 0?"Free":"$"+g.Price)</td>
+                <td>@g.Genre</td>
+                <td>@g.Rating</td>
+                <td>@g.Platform</td>
+            </tr>
+        }
+    </table>
+    <h1 class="display-4">Welcome to Mature Audience Games Only</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Platform</th>
+        </tr>
+        @foreach(Game g in ViewBag.mGames)
+        {
+            <tr>
+                <td>@g.Title</td>
+                <td>@(g.Price == 0?"Free":"$"+g.Price)</td>
+                <td>@g.Genre</td>
+                <td>@g.Rating</td>
+                <td>@g.Platform</td>
+            </tr>
+        }
+    </table>
+    <h1 class="display-4">Welcome to Rocket League</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Platform</th>
+        </tr>
+
+            <tr>
+                <td>@ViewBag.single.Title</td>
+                <td>@(ViewBag.single.Price == 0 ? "Free" : "$" + ViewBag.single.Price)</td>
+                <td>@ViewBag.single.Genre</td>
+                <td>@ViewBag.single.Rating</td>
+                <td>@ViewBag.single.Platform</td>
+            </tr>
+    </table>
+
 </div>
