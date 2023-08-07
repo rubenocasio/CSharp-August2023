@@ -45,6 +45,7 @@ class BSTNode {
      * @returns {boolean} Indicates if this tree is empty.
      */
     isEmpty() {
+      return this.root === null
     }
   
     /**
