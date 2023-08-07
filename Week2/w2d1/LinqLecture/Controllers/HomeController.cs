@@ -37,8 +37,21 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [HttpGet("")]
     public IActionResult Index()
     {
+        // List<Game> allGamesFromDB = AllGames.
+        List<Game> allGamesFromDB = AllGames.OrderBy(p => p.Price).OrderBy(t => t.Rating ).ToList();
+        ViewBag.allGames = allGamesFromDB;
+
+        List<Game> allPlatforms = AllGames.Where(f => f.Platform == "All" || f.Rating == "T").ToList();
+        ViewBag.all = allPlatforms;
+
+        List<Game> topMGames = AllGames.Where(r => r.Rating == "M").Take(9).ToList();
+        ViewBag.mGames = topMGames;
+
+        Game? singleGame = AllGames.FirstOrDefault(t => t.Title == "Rocket League");
+        ViewBag.single = singleGame;
         return View();
     }
 
