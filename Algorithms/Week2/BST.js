@@ -343,7 +343,39 @@ class BinarySearchTree {
    * @param {Node} current The current node during the traversal of this tree.
    * @returns {Array<number>} The data of all nodes in BFS order.
    */
-  toArrLevelorder(current = this.root) { }
+  toArrLevelorder(current = this.root) {
+    // Initialize an empty array 'queue' for holding nodes to process
+    const queue = [];
+    // Initialize an empty array 'vals' for holding the node values in the correct order
+    const vals = [];
+
+    // If there's a node provided, enqueue it for processing
+    if (current) {
+      queue.push(current);
+    }
+
+    // Loop continues as long as there are nodes in the queue
+    while (queue.length > 0) {
+      // Remove the first node from the queue for processing
+      const dequeuedNode = queue.shift();
+
+      // Add its data/value to the 'vals' array
+      vals.push(dequeuedNode.data);
+
+      // If the dequeued node has a left child, enqueue it for later processing
+      if (dequeuedNode.left) {
+        queue.push(dequeuedNode.left);
+      }
+
+      // If the dequeued node has a right child, enqueue it for later processing
+      if (dequeuedNode.right) {
+        queue.push(dequeuedNode.right);
+      }
+    }
+
+    // After all nodes have been processed, return the 'vals' array
+    return vals;
+  }
 
   /**
    * Recursively counts the total number of nodes in this tree.
@@ -352,7 +384,18 @@ class BinarySearchTree {
    * @param {Node} node The current node during the traversal of this tree.
    * @returns {number} The total number of nodes.
    */
-  size(node = this.root) { }
+  size(node = this.root) {
+    // If the node is null or undefined (i.e., does not exist), 
+    // return 0 because there's no node to count.
+    if (!node) {
+      return 0;
+    }
+
+    // If the node exists, count it as 1 and then recursively count the sizes of its left 
+    // and right subtrees. The function essentially adds up the current node (1) and 
+    // the sizes of its left and right children.
+    return 1 + this.size(node.left) + this.size(node.right);
+  }
 
   /**
    * Calculates the height of the tree which is based on how many nodes from
@@ -362,7 +405,21 @@ class BinarySearchTree {
    * @param {Node} node The current node during traversal of this tree.
    * @returns {number} The height of the tree.
    */
-  height(node = this.root) { }
+  height(node = this.root) {
+
+    // If the node is null or undefined (i.e., it doesn't exist),
+    // return 0. This means we've hit the bottom of the tree.
+    if (!node) {
+      return 0;
+    }
+
+    // Recursively compute the height of the left and right subtrees.
+    // The height of the current tree rooted at 'node' is the height of the 
+    // taller subtree plus 1 (for the current node). Math.max is used to determine 
+    // which subtree is taller.
+    return 1 + Math.max(this.height(node.left), this.height(node.right));
+  }
+
 
   /**
    * Determines if this tree is a full tree. A full tree is a tree where every
@@ -372,7 +429,32 @@ class BinarySearchTree {
    * @param {Node} node The current node during traversal of this tree.
    * @returns {boolean} Indicates if this tree is full.
    */
-  isFull(node = this.root) { }
+  isFull(node = this.root) {
+    // Base Case: If the tree or subtree rooted at 'node' is empty,
+    // it's not considered a full tree.
+    if (!node) {
+      return false;
+    }
+
+    // If the current node is a leaf node (i.e., has no left or right children),
+    // then it satisfies the condition for a full binary tree.
+    if (!node.left && !node.right) {
+      return true;
+    }
+
+    // If the current node has both left and right children, then we need to check 
+    // recursively if the subtrees rooted at those children are full.
+    if (node.left && node.right) {
+      return this.isFull(node.left) && this.isFull(node.right);
+    }
+
+    // If the current node has only one child (either left or right but not both),
+    // then the tree rooted at this node is not full.
+    return false;
+  }
+
+
+
   // Logs this tree horizontally with the root on the left.
   print(node = this.root, spaceCnt = 0, spaceIncr = 10) {
     if (!node) {
@@ -392,7 +474,6 @@ class BinarySearchTree {
 }
 
 const emptyTree = new BinarySearchTree();
-// emptyTree.isEmpty()
 
 const oneNodeTree = new BinarySearchTree();
 oneNodeTree.root = new BSTNode(10);
@@ -465,3 +546,7 @@ console.log(fullTree.contains(200))
 console.log(fullTree.containsRecursive(2))
 console.log(fullTree.containsRecursive(200))
 console.log(fullTree.range())
+console.log(fullTree.toArrLevelorder())
+console.log(fullTree.size())
+console.log(fullTree.height())
+console.log(fullTree.isFull())
