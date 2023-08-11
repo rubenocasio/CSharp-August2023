@@ -1,4 +1,4 @@
-# [Min Heap / Binary Heap](./index.js)
+# [Min Heap / Binary Heap](./MinHeap.js)
 
 ## Overview
 
