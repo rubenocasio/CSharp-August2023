@@ -358,6 +358,7 @@ class BinarySearchTree {
     while (queue.length > 0) {
       // Remove the first node from the queue for processing
       const dequeuedNode = queue.shift();
+      console.log("This is Queue: ", dequeuedNode)
 
       // Add its data/value to the 'vals' array
       vals.push(dequeuedNode.data);
@@ -372,7 +373,7 @@ class BinarySearchTree {
         queue.push(dequeuedNode.right);
       }
     }
-
+    // console.log("This is Queue: ", queue)
     // After all nodes have been processed, return the 'vals' array
     return vals;
   }
