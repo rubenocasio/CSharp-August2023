@@ -17,6 +17,22 @@ class MinHeap {
        */
       this.heap = [null];
     }
+    // Parent is located at Math.floor(i / 2);.
+    // Left child is located at i * 2.
+    // Right child is located at (i * 2) + 1.
+
+    //  Parent function
+    idxOfParent(i){
+      return Math.floor(i / 2);
+    }
+
+    idxOfLeftChild(i){
+      return i * 2;
+    }
+
+    idxOfRightChild(i){
+      return i * 2 + 1;
+    }
   
     /**
      * Retrieves the top (minimum number) in the heap without removing it.
