@@ -84,7 +84,7 @@ class MinHeap {
       }
     }
   }
-  
+
   /**
    * Extracts the min num from the heap and then re-orders the heap to
    * maintain order so the next min is ready to be extracted.
@@ -96,7 +96,48 @@ class MinHeap {
    * - Space: O(1) constant.
    * @returns {?number} The min number or null if empty.
    */
-  extract() { }
+  extract() {
+    if (this.heap.length <= 1) {
+      return null;
+    }
+    const minNum = this.heap[1];
+
+    const idx1 = this.heap.pop();
+    this.heap[1] = idx1;
+
+
+    let currentIndex = 1;
+
+    while (true) {
+      const leftChildIdx = currentIndex * 2;
+      const rightChildIdx = currentIndex * 2 + 1;
+      let smallerChildIdx = null;
+
+      if (leftChildIdx < this.heap.length && this.heap[leftChildIdx] < this.heap[currentIndex]) {
+        smallerChildIdx = leftChildIdx;
+      }
+
+      if (rightChildIdx < this.heap.length && this.heap[rightChildIdx] < this.heap[currentIndex] &&
+        (!smallerChildIdx || this.heap[rightChildIdx] < this.heap[leftChildIdx])) {
+        smallerChildIdx = rightChildIdx;
+      }
+
+      if (smallerChildIdx === null) {
+        break;
+      }
+
+      [this.heap[currentIndex], this.heap[smallerChildIdx]] = [
+        this.heap[smallerChildIdx],
+        this.heap[currentIndex],
+      ];
+
+
+      currentIndex = smallerChildIdx;
+    }
+
+    // Return the extracted minimum number.
+    return minNum;
+  }
 
   /**
    * Logs the tree horizontally with the root on the left and the index in
