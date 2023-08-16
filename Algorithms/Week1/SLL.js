@@ -95,14 +95,14 @@ class SinglyLinkedList {
     // Check if the list is empty (head is null)
     if (this.isEmpty()) {
       // If the list is empty, create a new node with the data and set it as the head of the list
-      this.head = new SLNode(data);
+      this.head = new ListNode(data);
       return this; // Return the updated list
     }
 
     // Check if the next node of the current runner is null, i.e., we are at the last node of the list
     if (runner.next === null) {
       // If we are at the last node, create a new node with the data and set it as the next node of the current runner
-      runner.next = new SLNode(data);
+      runner.next = new ListNode(data);
       return this; // Return the updated list
     }
 
@@ -555,6 +555,32 @@ class SinglyLinkedList {
     }
     return arr;
   }
+
+  /**
+   * Reverses this list in-place without using any extra lists.
+   * - Time: (?).
+   * - Space: (?).
+   * @returns {SinglyLinkedList} This list.
+   */
+  reverse() { }
+
+  /**
+   * Determines whether the list has a loop in it which would result in
+   * infinitely traversing unless otherwise avoided. A loop is when a node's
+   * next points to a node that is behind it.
+   * - Time: (?).
+   * - Space: (?).
+   * @returns {boolean} Whether the list has a loop or not.
+   */
+  hasLoop() { }
+
+  /**
+   * Removes all the nodes that have a negative integer as their data.
+   * - Time: (?).
+   * - Space: (?).
+   * @returns {SinglyLinkedList} This list after the negatives are removed.
+   */
+  removeNegatives() { }
 
   /**
    * Creates a comma separated string of the node's data.
