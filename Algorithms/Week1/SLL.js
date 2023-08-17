@@ -562,7 +562,28 @@ class SinglyLinkedList {
    * - Space: (?).
    * @returns {SinglyLinkedList} This list.
    */
-  reverse() { }
+  reverse() {
+    // Check if the list is empty or has only one element.
+    if (!this.head || !this.head.next) {
+      // Return the list.
+      return this; 
+    }
+  // Initialize a current pointer to the head.
+    let current = this.head;
+
+    while (current.next) {
+      // Store the next node as the new head.
+      const newHead = current.next;
+      // Cut the newHead out from its current position.
+      current.next = current.next.next;
+       // Point the newHead to the current head.
+      newHead.next = this.head;
+       // Update the head of the list to the newHead.
+      this.head = newHead;
+    }
+  // Return the reversed linked list.
+    return this;
+  }
 
   /**
    * Determines whether the list has a loop in it which would result in
@@ -572,7 +593,32 @@ class SinglyLinkedList {
    * - Space: (?).
    * @returns {boolean} Whether the list has a loop or not.
    */
-  hasLoop() { }
+  hasLoop() {
+    // Check if the list is empty.
+    if (!this.head) {
+       // No loop can exist in an empty list.
+      return false;
+    }
+   // Initialize two runners, one moving faster and the other at normal speed.
+    let fasterRunner = this.head;
+    let runner = this.head;
+  
+    // Iterate through the list while both runners are not null and the faster runner's next is not null.
+    while (fasterRunner && fasterRunner.next) {
+       // Move the normal speed runner one step.
+      runner = runner.next;
+       // Move the faster runner two steps.
+      fasterRunner = fasterRunner.next.next;
+  
+      // Check if the two runners meet at the same node.
+      if (runner === fasterRunner) {
+         // A loop is detected.
+        return true;
+      }
+    }
+     // No loop detected.
+    return false;
+  }
 
   /**
    * Removes all the nodes that have a negative integer as their data.
@@ -580,7 +626,36 @@ class SinglyLinkedList {
    * - Space: (?).
    * @returns {SinglyLinkedList} This list after the negatives are removed.
    */
-  removeNegatives() { }
+  removeNegatives() {
+    // Check if the list is empty.
+    if (this.isEmpty()) {
+      // Return the unchanged list if it's empty.
+      return this; 
+    }
+  // Initialize a runner to traverse the list.
+    let runner = this.head; 
+    
+    // Skip over any initial nodes with negative values.
+    while (runner && runner.data < 0) {
+       // Move the runner to the next node
+      runner = runner.next;
+    }
+  // Set the new head after skipping negative nodes.
+    this.head = runner; 
+  
+    // Traverse the list to remove nodes with negative values.
+    while (runner && runner.next) {
+      if (runner.next.data < 0) {
+    // Remove the negative node by bypassing it.
+        runner.next = runner.next.next;
+      } else {
+        // Move the runner to the next node.
+        runner = runner.next; 
+      }
+    }
+  
+    return this; // Return the modified linked list.
+  }
 
   /**
    * Creates a comma separated string of the node's data.
@@ -638,7 +713,7 @@ myList2.insertAtBackRecursive(1).insertAtBackRecursive(2).insertAtBackRecursive(
 
 // console.log(myList)
 // console.log(myList.toArr())
-myList.print()
+// myList.print()
 // myList.removeHead()
 // console.log(myList.average())
 // myList.print()
@@ -649,9 +724,14 @@ myList.print()
 // console.log(myList.containsRecursive(4))
 // console.log(myList.containsRecursive(20))
 // console.log(myList.recursiveMax())
-console.log(myList.secondToLast())
-console.log(myList.removeVal(3))
-console.log(myList.prepend(500, 4))
-myList.print()
+// console.log(myList.secondToLast())
+// console.log(myList.removeVal(3))
+// console.log(myList.prepend(500, 4))
+// myList.concat(myList2)
 
-myList.concat(myList2)
+myList.print()
+// myList.reverse()
+// myList.print()
+// console.log(myList.hasLoop())
+myList.removeNegatives()
+myList.print()
