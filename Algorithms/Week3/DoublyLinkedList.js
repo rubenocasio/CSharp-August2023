@@ -33,6 +33,9 @@ class DoublyLinkedList {
    */
   constructor() {
     // TODO: implement the constructor.
+
+    this.head = null;
+    this.tail = null;
   }
 
   /**
@@ -52,7 +55,27 @@ class DoublyLinkedList {
    * @param {any} data The data for the new node.
    * @returns {DoublyLinkedList} This list.
    */
-  insertAtFront(data) { }
+  insertAtFront(data) {
+    // Create a new node with the given data.
+    const newHead = new DLLNode(data);
+
+    // Check if the list is empty.
+    if (this.isEmpty()) {
+      // If the list is empty, set both the head and tail to the new node.
+      this.head = newHead;
+      this.tail = newHead;
+    } else {
+      // If the list is not empty:
+      // - Set the old head as the next node of the new node.
+      const oldHead = this.head;
+      oldHead.prev = newHead;
+      newHead.next = oldHead;
+      // - Update the head to be the new node.
+      this.head = newHead;
+    }
+    // Return the updated list.
+    return this;
+  }
 
   /**
    * Creates a new node and adds it at the back of this list.
@@ -61,7 +84,16 @@ class DoublyLinkedList {
    * @param {any} data The data for the new node.
    * @returns {DoublyLinkedList} This list.
    */
-  insertAtBack(data) { }
+  insertAtBack(data) {
+    if (this.isEmpty()) {
+      this.head = new DLLNode(data);
+      return this
+    }
+    let newTail = new DLLNode(data);
+    this.tail.next = newTail;
+    this.tail = newTail;
+    return this
+  }
 
   // EXTRA
   /**
@@ -101,6 +133,9 @@ class DoublyLinkedList {
 }
 
 const emptyList = new DoublyLinkedList();
+
+const triNodeList = new DoublyLinkedList().insertAtFront(5).insertAtFront(4).insertAtFront(3).insertAtFront(2).insertAtFront(1)
+console.log(triNodeList.toArray())
 
 /**************** Uncomment these test lists after insertAtBack is created. ****************/
   // const singleNodeList = new DoublyLinkedList().insertAtBack(1);
