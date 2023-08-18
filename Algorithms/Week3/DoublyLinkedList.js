@@ -113,18 +113,86 @@ class DoublyLinkedList {
  * @param {any} newVal Data for the new node.
  * @returns {boolean} Indicates if the new node was added.
  */
-  insertAfter(targetVal, newVal) { }
+  insertAfter(targetVal, newVal) {
+    // Check if the list is empty.
+    if (this.isEmpty()) {
+      return false;
+    }
+    // Initialize a runner to traverse the list.
+    let runner = this.head;
+    // Traverse the list to find the node with targetVal.
+    while (runner && runner.data !== targetVal) {
+      runner = runner.next;
+    }
+    // If the runner is null, targetVal was not found in the list.
+    if (runner === null) {
+      return false;
+    }
+    // Create a new node with the given newVal.
+    const newNode = new DLLNode(newVal);
+    // Update the pointers to insert the new node after the target node.
+    newNode.prev = runner;
+    newNode.next = runner.next;
+
+    // If the target node is the tail, update the tail to be the new node.
+    if (runner === this.tail) {
+      this.tail = newNode;
+    } else {
+      // If the runner was not the tail, update the next node's prev pointer.
+      runner.next.prev = newNode;
+    }
+    // Update the target node's next pointer to point to the new node.
+    runner.next = newNode;
+    // Indicate that the insertion was successful.
+    return true;
+  }
+
 
   /**
-   * Inserts a new node with the given newVal before the node that has the
-   * given targetVal as it's data.
-   * - Time: O(?).
-   * - Space: O(?).
-   * @param {any} targetVal The node data to find.
-   * @param {any} newVal Data for the new node.
-   * @returns {boolean} Indicates if the new node was added.
-   */
-  insertBefore(targetVal, newVal) { }
+  * Inserts a new node with the given newVal before the node with targetVal.
+  * - Time: O(n) linear, where n is the number of nodes.
+  * - Space: O(1) constant.
+  * @param {any} targetVal The node to insert before.
+  * @param {any} newVal The data for the new node.
+  * @returns {boolean} Indicates if the insertion was successful.
+  */
+  insertBefore(targetVal, newVal) {
+    // Check if the list is empty.
+    if (this.isEmpty()) {
+      return false;
+    }
+    // Initialize a runner to traverse the list.
+    let runner = this.head;
+    // Traverse the list to find the node with targetVal.
+    while (runner) {
+      // Check if the current node's data matches the targetVal.
+      if (runner.data === targetVal) {
+        // Create a new node with the given newVal.
+        const newNode = new DLLNode(newVal);
+        // Update the pointers to insert the new node before the target node.
+        newNode.next = runner;
+        newNode.prev = runner.prev;
+
+        // If the target node is the head, update the head to be the new node.
+        if (runner === this.head) {
+          this.head = newNode;
+        } else {
+          // If the runner was not the head, update the prev node's next pointer.
+          runner.prev.next = newNode;
+        }
+        // Update the target node's prev pointer to point to the new node.
+        runner.prev = newNode;
+        // Indicate that the insertion was successful.
+        return true;
+      }
+      // Move to the next node.
+      runner = runner.next;
+    }
+
+    // If targetVal was not found in the list, return false.
+    return false;
+  }
+
 
   /**
    * Converts this list to an array of the node's data.
@@ -157,6 +225,10 @@ class DoublyLinkedList {
 const emptyList = new DoublyLinkedList();
 
 const triNodeList = new DoublyLinkedList().insertAtFront(5).insertAtFront(4).insertAtFront(3).insertAtFront(2).insertAtFront(1)
+console.log(triNodeList.toArray())
+console.log(triNodeList.insertAfter(2, 500))
+console.log(triNodeList.toArray())
+console.log(triNodeList.insertBefore(1, 500))
 console.log(triNodeList.toArray())
 
 /**************** Uncomment these test lists after insertAtBack is created. ****************/
