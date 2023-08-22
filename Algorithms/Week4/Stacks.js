@@ -56,9 +56,25 @@ class Stack {
     size() { }
 }
 
-
 let empty = new Stack();
 let myList = new Stack()
+// myList.push(8)
+// myList.push(4)
+// myList.push(10)
+// myList.push(15)
+// myList.push(20)
+// myList.push(30)
+// myList.push(40);
+// console.log(myList.peek());
+// console.log(empty.isEmpty())
+// console.log(myList.isEmpty())
+// console.log(myList.size());
+// console.log(myList.isEmpty());
+// console.log(myList.pop());
+// console.log(myList.peek());
+// console.log(myList.push(5));
+// console.log(myList.push(7));
+// console.log(myList.peek());
 
 /*
     *** Bonus
@@ -77,7 +93,46 @@ class LinkedListStack {
         this.head = null;
     }
 
+    /**
+     * Adds a new given item to the top / back of this stack.
+     * - Time: O(1) constant.
+     * - Space: O(1) constant.
+     * @param {any} item The new item to be added to the top / back.
+     * @returns {number} The new length of this stack.
+     */
+    push(item) { }
 
+    /**
+     * Removes the top / last item from this stack.
+     * - Time: O(1) constant.
+     * - Space: O(1) constant.
+     * @returns {any} The removed item or undefined if this stack was empty.
+     */
+    pop() { }
+
+    /**
+     * Retrieves the top / last item from this stack without removing it.
+     * - Time: O(1) constant.
+     * - Space: O(1) constant.
+     * @returns {any} The top / last item of this stack.
+     */
+    peek() { }
+
+    /**
+     * Returns whether or not this stack is empty.
+     * - Time: O(1) constant.
+     * - Space: O(1) constant.
+     * @returns {boolean}
+     */
+    isEmpty() { }
+
+    /**
+     * Returns the size of this stack.
+     * - Time: O(1) constant.
+     * - Space: O(1) constant.
+     * @returns {number} The length.
+     */
+    size() { }
 
     // Time: O(n) linear, n = list length
     // Space: O(n)
@@ -93,3 +148,20 @@ class LinkedListStack {
         return vals;
     }
 }
+
+let emptyLLS = new LinkedListStack();
+let myListLLS = new LinkedListStack()
+myListLLS.push(10)
+myListLLS.push(20)
+myListLLS.push(30)
+myListLLS.push(40)
+myListLLS.push(50)
+myListLLS.push(60)
+console.log(myListLLS.isEmpty());
+console.log(myListLLS.peek());
+console.log(myListLLS.size());
+console.log(myListLLS.pop());
+console.log(myListLLS.size());
+console.log(myListLLS.contains(60));
+console.log(myListLLS.contains(50));
+myListLLS.print()
