@@ -93,6 +93,7 @@ class Queue {
     return str;
   }
 }
+
 const q1 = new Queue();
 const q2 = new Queue();
 const q3 = new Queue();
@@ -115,11 +116,13 @@ q2.enqueue(4);
 q1.print();
 
 console.log("=========== q3 below ==============")
-q3.enqueue("m");
+q3.enqueue("r");
 q3.enqueue("a");
-q3.enqueue("d");
+q3.enqueue("c");
+q3.enqueue("e");
+q3.enqueue("c");
 q3.enqueue("a");
-q3.enqueue("m");
+q3.enqueue("r");
 q3.print();
 
 
